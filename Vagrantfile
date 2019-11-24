@@ -1,6 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# ref: https://github.com/ecomm-integration-ballerina/kubernetes-cluster/blob/master/Vagrantfile
+
 servers = [
     {
         :name => "k8s-head",
@@ -142,9 +144,6 @@ Vagrant.configure("2") do |config|
             else
                 config.vm.provision "shell", inline: $configureNode
             end
-
         end
-
     end
-
-end 
+end
