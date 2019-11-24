@@ -16,6 +16,7 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisione
 
 # ref https://metallb.universe.tf/installation/
 echo "Installing MetalLB for loadBalancer"
+kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.8.3/manifests/metallb.yaml
 cat <<EOF | kubectl apply -f -
 apiVersion: v1
 kind: ConfigMap
