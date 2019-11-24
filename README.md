@@ -1,6 +1,6 @@
 # k8s-in-vagrant
 
-Run HA Kubernetes cluster in vagrant (mainly local pc)
+Run HA Kubernetes cluster in vagrant
 
 ## Install
 
