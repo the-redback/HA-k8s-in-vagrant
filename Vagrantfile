@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# ref: https://github.com/ecomm-integration-ballerina/kubernetes-cluster/blob/master/Vagrantfile
+# taken and improved from: https://github.com/ecomm-integration-ballerina/kubernetes-cluster/blob/master/Vagrantfile
 
 servers = [
     {
