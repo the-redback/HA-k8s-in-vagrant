@@ -8,13 +8,13 @@ vagrant up
 
 mkdir -p $HOME/.kube-vagrant
 
-if [[-f $HOME/.kube/config]]; then 
-	mv $HOME/.kube/config $HOME/.kube/config.bak
+if [[ -f $HOME/.kube/config ]]; then 
+  mv $HOME/.kube/config $HOME/.kube/config.bak
 fi
 
 vagrant scp k8s-head:/home/vagrant/.kube/config $HOME/.kube/config
 
-export KUBECONFIG=$HOME/.kube-vagrant/config
+export KUBECONFIG=$HOME/.kube/config
 
 echo "Installing rancher/local-path-provisioner for PVC"
 kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
