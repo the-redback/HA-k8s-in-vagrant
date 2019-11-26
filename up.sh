@@ -7,7 +7,12 @@ vagrant plugin install vagrant-scp
 vagrant up 
 
 mkdir -p $HOME/.kube-vagrant
-vagrant scp k8s-head:/home/vagrant/.kube/config $HOME/.kube-vagrant/config
+
+if [[-f $HOME/.kube/config]]; then 
+	mv $HOME/.kube/config $HOME/.kube/config.bak
+fi
+
+vagrant scp k8s-head:/home/vagrant/.kube/config $HOME/.kube/config
 
 export KUBECONFIG=$HOME/.kube-vagrant/config
 

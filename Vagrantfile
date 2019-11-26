@@ -7,8 +7,8 @@ servers = [
     {
         :name => "k8s-head",
         :type => "master",
-        :box => "ubuntu/xenial64",
-        :box_version => "20180831.0.0",
+        :box => "hashicorp/bionic64",
+        :box_version => "1.0.282",
         :eth1 => "192.168.205.10",
         :mem => "2048",
         :cpu => "2"
@@ -16,8 +16,8 @@ servers = [
     {
         :name => "k8s-node-1",
         :type => "node",
-        :box => "ubuntu/xenial64",
-        :box_version => "20180831.0.0",
+        :box => "hashicorp/bionic64",
+        :box_version => "1.0.282",
         :eth1 => "192.168.205.11",
         :mem => "2048",
         :cpu => "2"
@@ -25,8 +25,8 @@ servers = [
     {
         :name => "k8s-node-2",
         :type => "node",
-        :box => "ubuntu/xenial64",
-        :box_version => "20180831.0.0",
+        :box => "hashicorp/bionic64",
+        :box_version => "1.0.282",
         :eth1 => "192.168.205.12",
         :mem => "2048",
         :cpu => "2"
@@ -69,7 +69,8 @@ EOF
     sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 
     # ip of this box
-    IP_ADDR=`ifconfig enp0s8 | grep Mask | awk '{print $2}'| cut -f2 -d:`
+    IP_ADDR=`ifconfig eth1 | grep "inet " | awk '{print $2}'| cut -f2 -d:`
+    
     # set node-ip
     sudo sh -c 'echo KUBELET_EXTRA_ARGS= >> /etc/default/kubelet'
     sudo sed -i "/^[^#]*KUBELET_EXTRA_ARGS=/c\KUBELET_EXTRA_ARGS=--node-ip=$IP_ADDR" /etc/default/kubelet
@@ -82,8 +83,8 @@ $configureMaster = <<-SCRIPT
     
     echo "This is master"
     # ip of this box
-    IP_ADDR=`ifconfig enp0s8 | grep Mask | awk '{print $2}'| cut -f2 -d:`
-
+    IP_ADDR=`ifconfig eth1 | grep "inet " | awk '{print $2}'| cut -f2 -d:`
+    
     # install k8s master
     HOST_NAME=$(hostname -s)
     kubeadm init --apiserver-advertise-address=$IP_ADDR --apiserver-cert-extra-sans=$IP_ADDR  --node-name $HOST_NAME --pod-network-cidr=172.16.0.0/16
@@ -128,7 +129,7 @@ Vagrant.configure("2") do |config|
             config.vm.provider "virtualbox" do |v|
 
                 v.name = opts[:name]
-            	 v.customize ["modifyvm", :id, "--groups", "/Ballerina Development"]
+            	 v.customize ["modifyvm", :id, "--groups", "/HA Kubernetes"]
                 v.customize ["modifyvm", :id, "--memory", opts[:mem]]
                 v.customize ["modifyvm", :id, "--cpus", opts[:cpu]]
 
