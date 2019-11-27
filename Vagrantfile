@@ -3,6 +3,8 @@
 
 # taken and improved from: https://github.com/ecomm-integration-ballerina/kubernetes-cluster/blob/master/Vagrantfile
 
+KUBE_VER   = "1.15.6"
+
 servers = [
     {
         :name => "k8s-head",
@@ -59,7 +61,7 @@ $configureBox = <<-SCRIPT
 EOF
     apt-get update
     apt-get install -y kubelet kubeadm kubectl
-    apt-mark hold kubelet kubeadm kubectl
+    apt-mark hold kubelet=#{KUBE_VER}-00 kubeadm=#{KUBE_VER}-00 kubectl=#{KUBE_VER}-00
 
 
     # kubelet requires swap off
